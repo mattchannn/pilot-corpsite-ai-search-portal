@@ -9,7 +9,7 @@ it.each(
 	widths
 )('should show a list of fruits and then select one with %o viewport', async width => {
 	globalThis.happyDOM?.setViewport({width, height: 720})
-	const {user} = render(<App />, {route: '/'})
+	const {user} = render(<App />, {route: '/results'})
 
 	await expect(screen.findAllByRole('link')).resolves.toHaveLength(6)
 
@@ -19,8 +19,15 @@ it.each(
 	await expect(screen.findByText('Vitamin K')).resolves.toBeInTheDocument()
 })
 
+it('renders home page', async () => {
+	render(<App />, {route: '/'})
+
+	await expect(screen.findByText('搜索結果')).resolves.toBeInTheDocument()
+	await expect(screen.findByText('所有結果')).resolves.toBeInTheDocument()
+})
+
 it('redirects home page when trying to access an invalid fruit', async () => {
-	render(<App />, {route: '/invalid-fruit'})
+	render(<App />, {route: '/results/invalid-fruit'})
 
 	await expect(screen.findAllByRole('link')).resolves.toHaveLength(6)
 })

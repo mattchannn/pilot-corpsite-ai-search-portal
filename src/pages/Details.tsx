@@ -21,7 +21,7 @@ export function Details() {
 		f => f.name.toLowerCase() === fruitName?.toLowerCase()
 	)
 	if (!fruit) {
-		return <Navigate replace={true} to='/' />
+		return <Navigate replace={true} to='/results' />
 	}
 
 	const imageWidth = isTabletAndUp
@@ -49,7 +49,7 @@ export function Details() {
 					<ImageAttribution author={fruit.image.author} />
 				</div>
 				<div className='my-8 sm:my-0 sm:ml-16'>
-					<Link className='flex items-center' to='/'>
+					<Link className='flex items-center' to='/results'>
 						<img alt='' height={20} src='/icons/arrow-left.svg' width={20} />
 						<span className='ml-4 text-xl'>Back</span>
 					</Link>
