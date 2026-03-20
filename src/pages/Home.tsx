@@ -1,10 +1,10 @@
-import {useState} from 'react'
-import type {FormEvent} from 'react'
-import { Streamdown } from "streamdown";
 import {
 	experimental_streamedQuery as streamedQuery,
 	useQuery
 } from '@tanstack/react-query'
+import type {FormEvent} from 'react'
+import {useState} from 'react'
+import {Streamdown} from 'streamdown'
 import {searchQuery} from '@/api/search'
 import {Head} from '@/components/Head'
 
@@ -19,12 +19,12 @@ const topNavItems = [
 
 export function Home() {
 	// What is the difference of AIA SelectWise and AIA Priviledge Ultra
-	const [query, setQuery] = useState('');
+	const [query, setQuery] = useState('')
 
 	const summaryQuery = useQuery({
 		enabled: false,
 		queryFn: streamedQuery({
-			initialValue: "",
+			initialValue: '',
 			reducer: (accumulator, chunk) => accumulator + chunk,
 			streamFn: () => searchQuery(query)
 		}),
@@ -32,10 +32,12 @@ export function Home() {
 		retry: false
 	})
 
-	function handleSearch(event: FormEvent<HTMLFormElement> | FormEvent<HTMLButtonElement>) {
+	function handleSearch(
+		event: FormEvent<HTMLFormElement> | FormEvent<HTMLButtonElement>
+	) {
 		event.preventDefault()
 		if (!query.trim() || summaryQuery.isFetching) return
-  	void summaryQuery.refetch()
+		summaryQuery.refetch()
 	}
 
 	return (
@@ -47,27 +49,35 @@ export function Home() {
 						<nav className='flex min-h-20 items-center rounded-b-xl bg-white px-6'>
 							<img
 								alt='AIA'
-								className='mr-6 h-[50px] w-[50px] shrink-0 object-contain'
+								className='mr-6 shrink-0 object-contain'
+								height={50}
 								src='https://www.aia.com.hk/content/dam/group-wise/images/system/icons/aia-logo-red.svg'
+								width={50}
 							/>
-							<ul className='hidden min-[900px]:flex gap-6 font-medium text-sm'>
+							<ul className='hidden gap-6 font-medium text-sm min-[900px]:flex'>
 								{topNavItems.map(item => (
 									<li key={item}>{item}</li>
 								))}
 							</ul>
 							<div className='ml-auto flex items-center gap-4 text-sm'>
 								<span className='hidden sm:inline'>en</span>
-								<button className='rounded-md border border-rose-500 px-5 py-2 text-rose-600'>
+								<button
+									className='rounded-md border border-rose-500 px-5 py-2 text-rose-600'
+									type='button'
+								>
 									登入
 								</button>
-								<button className='rounded-md bg-rose-600 px-5 py-2 font-semibold text-white'>
+								<button
+									className='rounded-md bg-rose-600 px-5 py-2 font-semibold text-white'
+									type='button'
+								>
 									聯絡我們
 								</button>
 							</div>
 						</nav>
 					</div>
 
-					<div className='relative overflow-hidden px-6 pb-14 pt-12'>
+					<div className='relative overflow-hidden px-6 pt-12 pb-14'>
 						<div className='mx-auto max-w-5xl'>
 							<h1 className='font-bold text-6xl text-white'>搜索結果</h1>
 							<form
@@ -86,39 +96,37 @@ export function Home() {
 									<path d='m20 20-3.5-3.5' />
 								</svg>
 								<input
-									name='Query input'
 									aria-label='Search query'
 									className='ml-3 w-full bg-transparent text-lg text-zinc-600 outline-none'
+									name='Query input'
 									onChange={event => setQuery(event.target.value.trim())}
-									value={query}
 									type='text'
+									value={query}
 								/>
 							</form>
 						</div>
-						<div className='pointer-events-none absolute right-0 top-0 hidden h-full w-[420px] lg:block'>
-							<div className='absolute right-4 top-10 h-56 w-72 rotate-12 bg-rose-200/70 [clip-path:polygon(12%_18%,95%_8%,65%_62%,14%_81%)]' />
-							<div className='absolute right-10 top-24 h-64 w-80 -rotate-6 bg-rose-300/70 [clip-path:polygon(22%_6%,97%_20%,79%_90%,8%_80%)]' />
-							<div className='absolute right-0 top-24 h-64 w-80 bg-rose-100/70 [clip-path:polygon(8%_20%,87%_2%,98%_74%,20%_86%)]' />
+						<div className='pointer-events-none absolute top-0 right-0 hidden h-full w-[420px] lg:block'>
+							<div className='absolute top-10 right-4 h-56 w-72 rotate-12 bg-rose-200/70 [clip-path:polygon(12%_18%,95%_8%,65%_62%,14%_81%)]' />
+							<div className='absolute top-24 right-10 h-64 w-80 -rotate-6 bg-rose-300/70 [clip-path:polygon(22%_6%,97%_20%,79%_90%,8%_80%)]' />
+							<div className='absolute top-24 right-0 h-64 w-80 bg-rose-100/70 [clip-path:polygon(8%_20%,87%_2%,98%_74%,20%_86%)]' />
 						</div>
 					</div>
 				</header>
 
-				<section className='mx-auto max-w-5xl pr-6 pt-12 pb-10'>
+				<section className='mx-auto max-w-5xl pt-12 pr-6 pb-10'>
 					<h2 className='font-semibold text-5xl text-zinc-700'>所有結果</h2>
 					<div className='mt-8 rounded-xl bg-white p-6 shadow-sm'>
 						<div className='mb-4 flex items-center justify-between'>
 							<h3 className='font-semibold text-2xl text-zinc-800'>AI 摘要</h3>
 						</div>
 
-						{summaryQuery.data &&(
-							<p className='whitespace-pre-wrap text-base text-zinc-700'>
-								<Streamdown animated caret="block">
-									{summaryQuery.data}
-								</Streamdown>
-							</p>
+						{summaryQuery.data && (
+							<Streamdown animated={true} caret='block'>
+								{summaryQuery.data}
+							</Streamdown>
 						)}
 
-						{!summaryQuery.data && !summaryQuery.isFetching && (
+						{!(summaryQuery.data || summaryQuery.isFetching) && (
 							<p className='text-zinc-500'>
 								Search above to stream an AI summary.
 							</p>
