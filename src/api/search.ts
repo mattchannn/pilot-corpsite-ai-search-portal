@@ -14,7 +14,7 @@ function digest(buffer: string) {
 	// The last element in the array is either empty (if the chunk ended perfectly)
 	// or a partial event that hasn't finished yet.
 	// Keep it in the buffer for the next read() call.
-	const eventBlockRemainer = eventBlocks.pop() ?? ''
+	const [eventBlockRemainer = ''] = eventBlocks.splice(-1)
 
 	const chunks: string[] = []
 
@@ -30,7 +30,7 @@ function digest(buffer: string) {
 				const payloadText = trimLine.slice('data:'.length)
 				try {
 					const payload = JSON.parse(payloadText) as StreamPayload
-					const chunk = payload.answer ?? ''
+					const chunk = payload.answer
 					if (chunk) {
 						chunks.push(chunk)
 					}
