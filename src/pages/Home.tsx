@@ -1,5 +1,6 @@
 import {useState} from 'react'
 import type {FormEvent} from 'react'
+import { Streamdown } from "streamdown";
 import {
 	experimental_streamedQuery as streamedQuery,
 	useQuery
@@ -111,7 +112,9 @@ export function Home() {
 
 						{summaryQuery.data &&(
 							<p className='whitespace-pre-wrap text-base text-zinc-700'>
-								{summaryQuery.data}
+								<Streamdown animated caret="block">
+									{summaryQuery.data}
+								</Streamdown>
 							</p>
 						)}
 
