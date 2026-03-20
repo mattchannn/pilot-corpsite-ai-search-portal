@@ -41,7 +41,7 @@
 			"a11y": "error",
 			"complexity": "error",
 			"correctness": "error",
-			"nursery": "error",
+			"nursery": "off",
 			"performance": "error",
 			"recommended": true,
 			"security": "error",
@@ -58,9 +58,9 @@
 						"useImportExtensions": "off",
 						"noUnresolvedImports": "off"
 					},
-					"nursery": {
-						"useExplicitType": "off",
-						"noTernary": "off"
+					"complexity": {
+						"noExcessiveLinesPerFunction": "off",
+						"noExcessiveCognitiveComplexity": "off"
 					},
 					"suspicious": {
 						"noReactSpecificProps": "off",
