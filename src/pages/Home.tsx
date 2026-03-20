@@ -17,11 +17,11 @@ const topNavItems = [
 ]
 
 export function Home() {
-	const [query, setQuery] = useState(
-		'What is the difference of AIA SelectWise and AIA Priviledge Ultra'
-	)
+	// What is the difference of AIA SelectWise and AIA Priviledge Ultra
+	const [query, setQuery] = useState('');
+
 	const summaryQuery = useQuery({
-		enabled: query.trim().length > 0,
+		enabled: false,
 		queryFn: streamedQuery({
 			initialValue: "",
 			reducer: (accumulator, chunk) => accumulator + chunk,
@@ -107,29 +107,22 @@ export function Home() {
 					<div className='mt-8 rounded-xl bg-white p-6 shadow-sm'>
 						<div className='mb-4 flex items-center justify-between'>
 							<h3 className='font-semibold text-2xl text-zinc-800'>AI 摘要</h3>
-							<button
-								className='rounded-md bg-rose-600 px-4 py-2 font-medium text-sm text-white disabled:cursor-not-allowed disabled:opacity-60'
-								disabled={summaryQuery.isFetching}
-								onClick={(e: FormEvent<HTMLButtonElement>) => {
-									handleSearch(e)
-								}}
-								type='button'
-							>
-								{summaryQuery.isFetching ? 'Generating...' : 'Generate summary'}
-							</button>
 						</div>
 
-						{summaryQuery.data ? (
+						{summaryQuery.data &&(
 							<p className='whitespace-pre-wrap text-base text-zinc-700'>
 								{summaryQuery.data}
-								{summaryQuery.fetchStatus === 'fetching' ? (
-									<span className='animate-pulse'>▋</span>
-								) : null}
 							</p>
-						) : (
+						)}
+
+						{!summaryQuery.data && !summaryQuery.isFetching && (
 							<p className='text-zinc-500'>
 								Search above to stream an AI summary.
 							</p>
+						)}
+
+						{summaryQuery.isFetching && !summaryQuery.data && (
+							<span className='animate-pulse'>▋</span>
 						)}
 
 						{/* Error case */}
