@@ -1,8 +1,15 @@
+<!-- omit from toc -->
 # Corpsite AI Search Portal
 
 ![Test workflow](https://github.com/wtchnm/Vitamin/actions/workflows/test.yml/badge.svg) [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/wtchnm/Vitamin/blob/main/LICENSE)
 
-For POC only
+<!-- omit from toc -->
+## Table of Content
+
+- [Features](#features)
+- [How this project is created?](#how-this-project-is-created)
+- [Build app](#build-app)
+- [Scripts](#scripts)
 
 ## Features
 
@@ -14,12 +21,26 @@ For POC only
 
 ## How this project is created?
 
-This repository is created using this [GitHub template](https://github.com/wtchnm/Vitamin/generate).
+This repository is created using this [GitHub template](https://github.com/wtchnm/Vitamin). You can auto generate the template [here](https://github.com/wtchnm/Vitamin/generate)
 
-Alternatively you can use [degit](https://github.com/Rich-Harris/degit) to clone the template
+Alternatively, you can use [degit](https://github.com/Rich-Harris/degit) to clone the template
 
 ```bash
 npx degit wtchnm/Vitamin #main my-app
+```
+
+## Build app
+
+Login to Vercel
+
+```bash
+vercel login
+```
+
+Deploy
+
+```bash
+vercel
 ```
 
 ## Scripts
