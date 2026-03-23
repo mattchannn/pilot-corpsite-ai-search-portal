@@ -1,8 +1,8 @@
-# Vitamin 2.0
+# Corpsite AI Search Portal
 
 ![Test workflow](https://github.com/wtchnm/Vitamin/actions/workflows/test.yml/badge.svg) [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/wtchnm/Vitamin/blob/main/LICENSE)
 
-Opinionated Vite starter template. Previous version available on v1 branch.
+For POC only
 
 ## Features
 
@@ -12,18 +12,14 @@ Opinionated Vite starter template. Previous version available on v1 branch.
 - Write unit and integration tests with [Vitest 3](https://vitest.dev/) and [Testing Library 16](https://testing-library.com/).
 - Write e2e tests with [Playwright 1.52](https://www.cypress.io).
 
-## Getting started
+## How this project is created?
 
-Use this repository as a [GitHub template](https://github.com/wtchnm/Vitamin/generate) or use [degit](https://github.com/Rich-Harris/degit) to clone to your machine with an empty git history:
+This repository is created using this [GitHub template](https://github.com/wtchnm/Vitamin/generate).
 
-```
-npx degit wtchnm/Vitamin#main my-app
-```
+Alternatively you can use [degit](https://github.com/Rich-Harris/degit) to clone the template
 
-Then, install the dependencies:
-
-```
-pnpm install
+```bash
+npx degit wtchnm/Vitamin #main my-app
 ```
 
 ## Scripts
