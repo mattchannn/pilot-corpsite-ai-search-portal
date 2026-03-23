@@ -1,7 +1,10 @@
 /// <reference types="vite/client" />
 
-import type DetachedWindowApi from 'happy-dom/lib/window/DetachedWindowAPI.js'
+// https://vite.dev/guide/env-and-mode#intellisense-for-typescript
+interface ImportMetaEnv {
+	readonly VITE_AI_SEARCH_API_URL: string
+}
 
-declare global {
-	var happyDOM: DetachedWindowApi | undefined
+interface ImportMeta {
+	readonly env: ImportMetaEnv
 }

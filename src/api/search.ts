@@ -48,14 +48,11 @@ function digest(buffer: string) {
 }
 
 export async function searchQuery(query: string) {
-	const response = await fetch(
-		'https://pilot-corpsite-ai-search-service.fly.dev/search',
-		{
-			body: JSON.stringify({query}),
-			headers: {'Content-Type': 'application/json'},
-			method: 'POST'
-		}
-	)
+	const response = await fetch(import.meta.env.VITE_AI_SEARCH_API_URL, {
+		body: JSON.stringify({query}),
+		headers: {'Content-Type': 'application/json'},
+		method: 'POST'
+	})
 
 	if (!response.ok) {
 		throw new Error('Failed to stream response')
