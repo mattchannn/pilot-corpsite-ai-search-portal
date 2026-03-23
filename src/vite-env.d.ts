@@ -4,7 +4,3 @@
 interface ImportMetaEnv {
 	readonly VITE_AI_SEARCH_API_URL: string
 }
-
-interface ImportMeta {
-	readonly env: ImportMetaEnv
-}
