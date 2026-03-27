@@ -6,7 +6,7 @@ export const handlers = [
 		await delay('real')
 		return HttpResponse.json(fruits)
 	}),
-	http.post('/search', () => {
+	http.post('/ai-summary', () => {
 		function makeSseStream(rawChunks: string[]) {
 			const encoder = new TextEncoder()
 			return new ReadableStream({

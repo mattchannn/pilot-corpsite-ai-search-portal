@@ -3,7 +3,7 @@ import {vi} from 'vitest'
 import {server} from '../../mocks/server'
 import {searchQuery} from '../search'
 
-const SEARCH_URL = '/search'
+const SEARCH_URL = '/ai-summary'
 const QUERY =
 	'What is the difference of AIA SelectWise and AIA Priviledge Ultra'
 
