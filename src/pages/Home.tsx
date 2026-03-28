@@ -1,3 +1,4 @@
+import type {UseQueryResult} from '@tanstack/react-query'
 import {
 	experimental_streamedQuery as streamedQuery,
 	useQuery
@@ -5,7 +6,8 @@ import {
 import type {FormEvent} from 'react'
 import {useState} from 'react'
 import {Streamdown} from 'streamdown'
-import {searchQuery} from '@/api/search'
+import type {SearchResult} from '@/api/search'
+import {fetchSearchResults, searchQuery} from '@/api/search'
 import {Head} from '@/components/Head'
 
 const topNavItems = [
@@ -20,6 +22,13 @@ const topNavItems = [
 export function Home() {
 	// What is the difference of AIA SelectWise and AIA Priviledge Ultra
 	const [query, setQuery] = useState('')
+
+	const searchResultQuery: UseQueryResult<SearchResult[]> = useQuery({
+		enabled: false,
+		queryFn: () => fetchSearchResults(query),
+		queryKey: ['search-results'],
+		retry: false
+	})
 
 	const summaryQuery = useQuery({
 		enabled: false,
@@ -37,6 +46,7 @@ export function Home() {
 	) {
 		event.preventDefault()
 		if (!query.trim() || summaryQuery.isFetching) return
+		searchResultQuery.refetch()
 		summaryQuery.refetch()
 	}
 
@@ -143,6 +153,76 @@ export function Home() {
 							</p>
 						)}
 					</div>
+					{/* Search results */}
+					{(searchResultQuery.data ||
+						searchResultQuery.isFetching ||
+						searchResultQuery.isError) && (
+						<div className='mt-6'>
+							{searchResultQuery.isError && (
+								<p className='text-rose-700'>
+									Unable to load search results. Please try again later.
+								</p>
+							)}
+							{searchResultQuery.isFetching && (
+								// Skeleton loader
+								<div className='space-y-4'>
+									{(['a', 'b', 'c'] as const).map(id => (
+										<div
+											className='flex animate-pulse gap-4 rounded-xl bg-white p-4 shadow-sm'
+											key={id}
+										>
+											<div className='h-28 w-36 shrink-0 rounded-lg bg-zinc-200' />
+											<div className='flex-1 space-y-2 py-1'>
+												<div className='h-4 w-1/2 rounded bg-zinc-200' />
+												<div className='h-3 w-full rounded bg-zinc-200' />
+												<div className='h-3 w-4/5 rounded bg-zinc-200' />
+											</div>
+										</div>
+									))}
+								</div>
+							)}
+							{searchResultQuery.isFetched && searchResultQuery.data && searchResultQuery.data.length === 0 && (
+								<p className='text-zinc-500'>No results found.</p>
+							)}
+							{searchResultQuery.isFetched && searchResultQuery.data && searchResultQuery.data.length > 0 && (
+								<ul className='divide-y divide-zinc-100 rounded-xl bg-white shadow-sm'>
+									{searchResultQuery.data.map(result => (
+										<li className='flex gap-4 p-4' key={result.externalLink}>
+											{result.thumbnail && (
+												<a
+													className='shrink-0'
+													href={result.externalLink}
+													rel='noreferrer noopener'
+													target='_blank'
+												>
+													<img
+														alt={result.title}
+														className='h-28 w-40 rounded-lg object-cover'
+														height={112}
+														src={`data:image/jpeg;base64,${result.thumbnail}`}
+														width={160}
+													/>
+												</a>
+											)}
+											<div className='min-w-0 flex-1'>
+												<a
+													className='font-semibold text-xl text-zinc-800 hover:underline cursor-pointer'
+													href={result.externalLink}
+													rel='noreferrer noopener'
+													target='_blank'
+												>
+													{result.title}
+												</a>
+												<p className='mt-5 line-clamp-3 text-sm text-zinc-500'>
+													{result.chunk}
+												</p>
+											</div>
+										</li>
+									))}
+								</ul>
+							)}
+						</div>
+					)}
 				</section>
 			</div>
 		</>

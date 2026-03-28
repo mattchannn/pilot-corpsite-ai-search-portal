@@ -4,6 +4,13 @@ interface StreamPayload {
 	answer?: string
 }
 
+export interface SearchResult {
+	title: string
+	externalLink: string
+	thumbnail: string
+	chunk: string
+}
+
 function digest(buffer: string) {
 	// SSE events are separated by double newlines (\n\n)
 	// ========================================================================
@@ -47,8 +54,23 @@ function digest(buffer: string) {
 	return {chunks, eventBlockRemainer}
 }
 
-export async function searchQuery(query: string) {
+export async function fetchSearchResults(query: string): Promise<SearchResult[]> {
 	const response = await fetch(import.meta.env.VITE_AI_SEARCH_API_URL, {
+		body: JSON.stringify({query}),
+		headers: {'Content-Type': 'application/json'},
+		method: 'POST'
+	})
+
+	if (!response.ok) {
+		throw new Error('Failed to fetch search results')
+	}
+
+	const data = (await response.json()) as SearchResult[]
+	return data;
+}
+
+export async function searchQuery(query: string) {
+	const response = await fetch(import.meta.env.VITE_AI_SUMMARY_API_URL, {
 		body: JSON.stringify({query}),
 		headers: {'Content-Type': 'application/json'},
 		method: 'POST'
