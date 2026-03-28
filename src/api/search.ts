@@ -54,7 +54,9 @@ function digest(buffer: string) {
 	return {chunks, eventBlockRemainer}
 }
 
-export async function fetchSearchResults(query: string): Promise<SearchResult[]> {
+export async function fetchSearchResults(
+	query: string
+): Promise<SearchResult[]> {
 	const response = await fetch(import.meta.env.VITE_AI_SEARCH_API_URL, {
 		body: JSON.stringify({query}),
 		headers: {'Content-Type': 'application/json'},
@@ -66,7 +68,7 @@ export async function fetchSearchResults(query: string): Promise<SearchResult[]>
 	}
 
 	const data = (await response.json()) as SearchResult[]
-	return data;
+	return data
 }
 
 export async function searchQuery(query: string) {

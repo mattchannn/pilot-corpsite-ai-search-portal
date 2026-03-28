@@ -181,46 +181,50 @@ export function Home() {
 									))}
 								</div>
 							)}
-							{searchResultQuery.isFetched && searchResultQuery.data && searchResultQuery.data.length === 0 && (
-								<p className='text-zinc-500'>No results found.</p>
-							)}
-							{searchResultQuery.isFetched && searchResultQuery.data && searchResultQuery.data.length > 0 && (
-								<ul className='divide-y divide-zinc-100 rounded-xl bg-white shadow-sm'>
-									{searchResultQuery.data.map(result => (
-										<li className='flex gap-4 p-4' key={result.externalLink}>
-											{result.thumbnail && (
-												<a
-													className='shrink-0'
-													href={result.externalLink}
-													rel='noreferrer noopener'
-													target='_blank'
-												>
-													<img
-														alt={result.title}
-														className='h-28 w-40 rounded-lg object-cover'
-														height={112}
-														src={`data:image/jpeg;base64,${result.thumbnail}`}
-														width={160}
-													/>
-												</a>
-											)}
-											<div className='min-w-0 flex-1'>
-												<a
-													className='font-semibold text-xl text-zinc-800 hover:underline cursor-pointer'
-													href={result.externalLink}
-													rel='noreferrer noopener'
-													target='_blank'
-												>
-													{result.title}
-												</a>
-												<p className='mt-5 line-clamp-3 text-sm text-zinc-500'>
-													{result.chunk}
-												</p>
-											</div>
-										</li>
-									))}
-								</ul>
-							)}
+							{searchResultQuery.isFetched &&
+								searchResultQuery.data &&
+								searchResultQuery.data.length === 0 && (
+									<p className='text-zinc-500'>No results found.</p>
+								)}
+							{searchResultQuery.isFetched &&
+								searchResultQuery.data &&
+								searchResultQuery.data.length > 0 && (
+									<ul className='divide-y divide-zinc-100 rounded-xl bg-white shadow-sm'>
+										{searchResultQuery.data.map(result => (
+											<li className='flex gap-4 p-4' key={result.externalLink}>
+												{result.thumbnail && (
+													<a
+														className='shrink-0'
+														href={result.externalLink}
+														rel='noreferrer noopener'
+														target='_blank'
+													>
+														<img
+															alt={result.title}
+															className='h-28 w-40 rounded-lg object-cover'
+															height={112}
+															src={`data:image/jpeg;base64,${result.thumbnail}`}
+															width={160}
+														/>
+													</a>
+												)}
+												<div className='min-w-0 flex-1'>
+													<a
+														className='font-semibold text-xl text-zinc-800 hover:underline cursor-pointer'
+														href={result.externalLink}
+														rel='noreferrer noopener'
+														target='_blank'
+													>
+														{result.title}
+													</a>
+													<p className='mt-5 line-clamp-3 text-sm text-zinc-500'>
+														{result.chunk}
+													</p>
+												</div>
+											</li>
+										))}
+									</ul>
+								)}
 						</div>
 					)}
 				</section>
