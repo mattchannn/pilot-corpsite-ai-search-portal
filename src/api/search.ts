@@ -6,7 +6,8 @@ interface StreamPayload {
 
 export interface SearchResult {
 	title: string
-	externalLink: string
+	// biome-ignore lint/style/useNamingConvention: API spec is defined as `external_link`
+	external_link: string
 	thumbnail: string
 	chunk: string
 }

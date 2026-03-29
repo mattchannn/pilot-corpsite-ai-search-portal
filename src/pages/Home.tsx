@@ -25,7 +25,7 @@ export function Home() {
 
 	const searchResultQuery: UseQueryResult<SearchResult[]> = useQuery({
 		enabled: false,
-		queryFn: () => fetchSearchResults(query),
+		queryFn: () => fetchSearchResults(query.trim()),
 		queryKey: ['search-results'],
 		retry: false
 	})
@@ -35,7 +35,7 @@ export function Home() {
 		queryFn: streamedQuery({
 			initialValue: '',
 			reducer: (accumulator, chunk) => accumulator + chunk,
-			streamFn: () => searchQuery(query)
+			streamFn: () => searchQuery(query.trim())
 		}),
 		queryKey: ['search-summary'],
 		retry: false
@@ -109,7 +109,7 @@ export function Home() {
 									aria-label='Search query'
 									className='ml-3 w-full bg-transparent text-lg text-zinc-600 outline-none'
 									name='Query input'
-									onChange={event => setQuery(event.target.value.trim())}
+									onChange={event => setQuery(event.target.value)}
 									type='text'
 									value={query}
 								/>
@@ -191,11 +191,11 @@ export function Home() {
 								searchResultQuery.data.length > 0 && (
 									<ul className='divide-y divide-zinc-100 rounded-xl bg-white shadow-sm'>
 										{searchResultQuery.data.map(result => (
-											<li className='flex gap-4 p-4' key={result.externalLink}>
+											<li className='flex gap-4 p-4' key={result.external_link}>
 												{result.thumbnail && (
 													<a
 														className='shrink-0'
-														href={result.externalLink}
+														href={result.external_link}
 														rel='noreferrer noopener'
 														target='_blank'
 													>
@@ -211,7 +211,7 @@ export function Home() {
 												<div className='min-w-0 flex-1'>
 													<a
 														className='font-semibold text-xl text-zinc-800 hover:underline cursor-pointer'
-														href={result.externalLink}
+														href={result.external_link}
 														rel='noreferrer noopener'
 														target='_blank'
 													>
