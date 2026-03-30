@@ -161,7 +161,7 @@ export function Home() {
 							searchResultQuery.isFetching ||
 							searchResultQuery.isError) && (
 							<div>
-								{searchResultQuery.isError && (
+								{!searchResultQuery.isFetching && searchResultQuery.isError && (
 									<p className='p-6 text-rose-700'>
 										Unable to load search results. Please try again later.
 									</p>
@@ -184,12 +184,12 @@ export function Home() {
 										))}
 									</div>
 								)}
-								{searchResultQuery.isFetched &&
+								{!searchResultQuery.isFetching &&
 									searchResultQuery.data &&
 									searchResultQuery.data.length === 0 && (
 										<p className='p-6 text-zinc-500'>No results found.</p>
 									)}
-								{searchResultQuery.isFetched &&
+								{!searchResultQuery.isFetching &&
 									searchResultQuery.data &&
 									searchResultQuery.data.length > 0 && (
 										<ul className='divide-y divide-zinc-100'>
