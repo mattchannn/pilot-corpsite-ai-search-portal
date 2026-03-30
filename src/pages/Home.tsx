@@ -125,108 +125,115 @@ export function Home() {
 
 				<section className='mx-auto max-w-5xl pt-12 pr-6 pb-10'>
 					<h2 className='font-semibold text-5xl text-zinc-700'>所有結果</h2>
-					<div className='mt-8 rounded-xl bg-white p-6 shadow-sm'>
-						<div className='mb-4 flex items-center justify-between'>
-							<h3 className='font-semibold text-2xl text-zinc-800'>AI 摘要</h3>
-						</div>
+					<div className='mt-8 rounded-xl bg-white shadow-sm'>
+						<div className='p-6'>
+							<div className='mb-4 flex items-center justify-between'>
+								<h3 className='font-semibold text-2xl text-zinc-800'>
+									AI 摘要
+								</h3>
+							</div>
 
-						{summaryQuery.data && (
-							<Streamdown animated={true} caret='block'>
-								{summaryQuery.data}
-							</Streamdown>
-						)}
+							{summaryQuery.data && (
+								<Streamdown animated={true} caret='block'>
+									{summaryQuery.data}
+								</Streamdown>
+							)}
 
-						{!(summaryQuery.data || summaryQuery.isFetching) && (
-							<p className='text-zinc-500'>
-								Search above to stream an AI summary.
-							</p>
-						)}
-
-						{summaryQuery.isFetching && !summaryQuery.data && (
-							<span className='animate-pulse'>▋</span>
-						)}
-
-						{/* Error case */}
-						{summaryQuery.isError && (
-							<p className='text-rose-700'>
-								Unable to generate AI summary. Please try again later.
-							</p>
-						)}
-					</div>
-					{/* Search results */}
-					{(searchResultQuery.data ||
-						searchResultQuery.isFetching ||
-						searchResultQuery.isError) && (
-						<div className='mt-6'>
-							{searchResultQuery.isError && (
-								<p className='text-rose-700'>
-									Unable to load search results. Please try again later.
+							{!(summaryQuery.data || summaryQuery.isFetching) && (
+								<p className='text-zinc-500'>
+									Search above to stream an AI summary.
 								</p>
 							)}
-							{searchResultQuery.isFetching && (
-								// Skeleton loader
-								<div className='space-y-4'>
-									{(['a', 'b', 'c'] as const).map(id => (
-										<div
-											className='flex animate-pulse gap-4 rounded-xl bg-white p-4 shadow-sm'
-											key={id}
-										>
-											<div className='h-28 w-36 shrink-0 rounded-lg bg-zinc-200' />
-											<div className='flex-1 space-y-2 py-1'>
-												<div className='h-4 w-1/2 rounded bg-zinc-200' />
-												<div className='h-3 w-full rounded bg-zinc-200' />
-												<div className='h-3 w-4/5 rounded bg-zinc-200' />
-											</div>
-										</div>
-									))}
-								</div>
+
+							{summaryQuery.isFetching && !summaryQuery.data && (
+								<span className='animate-pulse'>▋</span>
 							)}
-							{searchResultQuery.isFetched &&
-								searchResultQuery.data &&
-								searchResultQuery.data.length === 0 && (
-									<p className='text-zinc-500'>No results found.</p>
-								)}
-							{searchResultQuery.isFetched &&
-								searchResultQuery.data &&
-								searchResultQuery.data.length > 0 && (
-									<ul className='divide-y divide-zinc-100 rounded-xl bg-white shadow-sm'>
-										{searchResultQuery.data.map(result => (
-											<li className='flex gap-4 p-4' key={result.external_link}>
-												{result.thumbnail && (
-													<a
-														className='shrink-0'
-														href={result.external_link}
-														rel='noreferrer noopener'
-														target='_blank'
-													>
-														<img
-															alt={result.title}
-															className='h-28 w-40 rounded-lg object-cover'
-															height={112}
-															src={`data:image/jpeg;base64,${result.thumbnail}`}
-															width={160}
-														/>
-													</a>
-												)}
-												<div className='min-w-0 flex-1'>
-													<a
-														className='font-semibold text-xl text-zinc-800 hover:underline cursor-pointer'
-														href={result.external_link}
-														rel='noreferrer noopener'
-														target='_blank'
-													>
-														{result.title}
-													</a>
-													<p className='mt-5 line-clamp-3 text-sm text-zinc-500'>
-														{result.chunk}
-													</p>
-												</div>
-											</li>
-										))}
-									</ul>
-								)}
+
+							{/* Error case */}
+							{summaryQuery.isError && (
+								<p className='text-rose-700'>
+									Unable to generate AI summary. Please try again later.
+								</p>
+							)}
 						</div>
-					)}
+						{/* Search results */}
+						{(searchResultQuery.data ||
+							searchResultQuery.isFetching ||
+							searchResultQuery.isError) && (
+							<div>
+								{searchResultQuery.isError && (
+									<p className='p-6 text-rose-700'>
+										Unable to load search results. Please try again later.
+									</p>
+								)}
+								{searchResultQuery.isFetching && (
+									// Skeleton loader
+									<div className='space-y-4 p-6'>
+										{(['a', 'b', 'c'] as const).map(id => (
+											<div
+												className='flex animate-pulse gap-4 rounded-xl bg-zinc-50 p-4'
+												key={id}
+											>
+												<div className='h-28 w-36 shrink-0 rounded-lg bg-zinc-200' />
+												<div className='flex-1 space-y-2 py-1'>
+													<div className='h-4 w-1/2 rounded bg-zinc-200' />
+													<div className='h-3 w-full rounded bg-zinc-200' />
+													<div className='h-3 w-4/5 rounded bg-zinc-200' />
+												</div>
+											</div>
+										))}
+									</div>
+								)}
+								{searchResultQuery.isFetched &&
+									searchResultQuery.data &&
+									searchResultQuery.data.length === 0 && (
+										<p className='p-6 text-zinc-500'>No results found.</p>
+									)}
+								{searchResultQuery.isFetched &&
+									searchResultQuery.data &&
+									searchResultQuery.data.length > 0 && (
+										<ul className='divide-y divide-zinc-100'>
+											{searchResultQuery.data.map(result => (
+												<li
+													className='flex gap-4 p-4'
+													key={result.external_link}
+												>
+													{result.thumbnail && (
+														<a
+															className='shrink-0'
+															href={result.external_link}
+															rel='noreferrer noopener'
+															target='_blank'
+														>
+															<img
+																alt={result.title}
+																className='h-28 w-40 rounded-lg object-cover'
+																height={112}
+																src={`data:image/jpeg;base64,${result.thumbnail}`}
+																width={160}
+															/>
+														</a>
+													)}
+													<div className='min-w-0 flex-1'>
+														<a
+															className='cursor-pointer font-semibold text-xl text-zinc-800 hover:underline'
+															href={result.external_link}
+															rel='noreferrer noopener'
+															target='_blank'
+														>
+															{result.title}
+														</a>
+														<p className='mt-5 line-clamp-3 text-sm text-zinc-500'>
+															{result.chunk}
+														</p>
+													</div>
+												</li>
+											))}
+										</ul>
+									)}
+							</div>
+						)}
+					</div>
 				</section>
 			</div>
 		</>
