@@ -45,7 +45,7 @@ export const handlers = [
 				sseEvent({
 					event: 'message',
 					answer:
-						'For more detail, please refer to the [official site](https://www.aia.com.hk/en).'
+						' For more detail, please refer to the [official site](https://www.aia.com.hk/en).'
 				})
 			]),
 			{
